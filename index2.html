@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categoría 2: Aceleración Normal y Radio de Curvatura - 1º Bachillerato</title>
+
+  <!-- Favicon Link (Soporta archivo favicon.svg y Data URI como fallback) -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Cpath d='M 12 52 L 52 52 M 12 52 L 12 12' stroke='%23ffffff' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M 12 52 Q 24 45 48 18' fill='none' stroke='%2338bdf8' stroke-width='3' stroke-dasharray='3 3'/%3E%3Cline x1='12' y1='52' x2='44' y2='22' stroke='%23facc15' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='48,18 38,22 44,28' fill='%23facc15'/%3E%3C/svg%3E">
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      chtml: {
+        scale: 1.15
+      },
+      svg: {
+        scale: 1.15
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #0284c7;
+      --solution-bg: #f1f5f9;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #38bdf8;
+      --solution-bg: #0f172a;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-color);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--border-color);
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      margin-bottom: 25px;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 15px;
+    }
+
+    .statement-box {
+      border-left: 4px solid var(--primary);
+      padding-left: 18px;
+      margin-bottom: 25px;
+    }
+
+    .statement-box p {
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .questions-list {
+      margin-left: 20px;
+      margin-bottom: 25px;
+    }
+
+    .questions-list li {
+      margin-bottom: 12px;
+      padding-left: 5px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .solutions-panel {
+      display: none;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .solutions-panel.visible {
+      display: block;
+    }
+
+    .solution-item {
+      background-color: var(--solution-bg);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .solution-item h3 {
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Física y Química 1º Bachillerato</h1>
+      <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">
+        🌙 Modo Oscuro
+      </button>
+    </header>
+
+    <main class="card">
+      <div class="category-title">Categoría 2: Cálculos de aceleración normal y radio de curvatura</div>
+      
+      <div class="statement-box">
+        <p><strong>Enunciado:</strong></p>
+        <p id="statement-text">
+          <!-- Statement generated by JS -->
+        </p>
+      </div>
+
+      <p><strong>Calcula:</strong></p>
+      <ol type="a" class="questions-list" id="questions-list">
+        <!-- Questions generated by JS -->
+      </ol>
+
+      <div class="controls">
+        <button class="btn btn-primary" onclick="generateNewExercise()">
+          🔄 Generar nuevo ejercicio
+        </button>
+        <button class="btn btn-secondary" onclick="toggleSolutions()">
+          👁️ Desplegar / Ocultar soluciones
+        </button>
+      </div>
+
+      <div class="solutions-panel" id="solutionsPanel">
+        <h2 style="margin-bottom: 15px; color: var(--primary); font-size: 1.2rem;">Resolución Completa Paso a Paso</h2>
+        <div id="solutionsContent">
+          <!-- Solutions generated by JS -->
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Recurso interactivo para el estudio de Cinemática Vectorial y Componentes Intrínsecas (1º Bachillerato).
+    </footer>
+  </div>
+
+  <script>
+    let exData = {};
+
+    // Helper functions for clean numbers
+    function getRandomFloat(min, max, decimals = 1) {
+      const val = Math.random() * (max - min) + min;
+      return parseFloat(val.toFixed(decimals));
+    }
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateNewExercise() {
+      // Clean, realistic parameters for 1st Bachillerato
+      const t = getRandomFloat(1.0, 5.0, 1);
+      const v = getRandomFloat(10.0, 30.0, 1);
+      
+      // Radius of curvature (rho) between 10m and 50m
+      const rho_exact = getRandomInt(12, 45); 
+      // Calculate a_n = v^2 / rho
+      const an = parseFloat(((v * v) / rho_exact).toFixed(2));
+
+      // Aceleración tangencial a_t
+      const at = getRandomFloat(3.0, 15.0, 1);
+
+      exData = { t, v, an, rho_exact, at };
+
+      // Render Enunciado
+      document.getElementById('statement-text').innerHTML = `
+        Un cuerpo se desplaza describiendo una trayectoria curva. En el instante $t = ${t.toString().replace('.', ',')}\\text{ s}$, su velocidad instantánea tiene un módulo de $v = ${v.toString().replace('.', ',')}\\text{ m/s}$ y la aceleración normal que experimenta en ese punto es $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$.
+      `;
+
+      // Render Preguntas
+      document.getElementById('questions-list').innerHTML = `
+        <li>El radio de curvatura $\\rho$ (o $r$) de la trayectoria en ese instante.</li>
+        <li>Si en ese mismo instante la aceleración tangencial es $a_t = ${at.toString().replace('.', ',')}\\text{ m/s}^2$, determina el módulo de la aceleración total $|\\vec{a}|$.</li>
+      `;
+
+      // Calculate Exact Solutions
+      const rho_calc = (v * v) / an;
+      const a_total = Math.sqrt(at * at + an * an);
+
+      // Render Soluciones
+      document.getElementById('solutionsContent').innerHTML = `
+        <div class="solution-item">
+          <h3>a) Radio de curvatura $\\rho$ de la trayectoria</h3>
+          <p>La relación entre la velocidad instantánea $v$, la aceleración normal $a_n$ y el radio de curvatura $\\rho$ viene dada por la expresión:</p>
+          $$a_n = \\frac{v^2}{\\rho}$$
+          <p>Despejando el radio de curvatura $\\rho$:</p>
+          $$\\rho = \\frac{v^2}{a_n}$$
+          <p>Sustituyendo los datos conocidos ($v = ${v.toString().replace('.', ',')}\\text{ m/s}$ y $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$):</p>
+          $$\\rho = \\frac{(${v.toString().replace('.', ',')})^2}{${an.toString().replace('.', ',')}} = \\frac{${(v*v).toFixed(2).replace('.', ',')}}{${an.toString().replace('.', ',')}} \\approx \\mathbf{${rho_calc.toFixed(2).replace('.', ',')} \\quad [\\text{m}]}$$
+        </div>
+
+        <div class="solution-item">
+          <h3>b) Módulo de la aceleración total $|\\vec{a}|$</h3>
+          <p>Las componentes intrínsecas de la aceleración (tangencial $a_t$ y normal $a_n$) son mutuamente perpendiculares ($a_t \\perp a_n$). Por lo tanto, el módulo del vector aceleración total se obtiene aplicando el teorema de Pitágoras:</p>
+          $$|\\vec{a}| = \\sqrt{a_t^2 + a_n^2}$$
+          <p>Sustituyendo $a_t = ${at.toString().replace('.', ',')}\\text{ m/s}^2$ y $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$:</p>
+          $$|\\vec{a}| = \\sqrt{(${at.toString().replace('.', ',')})^2 + (${an.toString().replace('.', ',')})^2}$$
+          $$|\\vec{a}| = \\sqrt{${(at*at).toFixed(2).replace('.', ',')} + ${(an*an).toFixed(2).replace('.', ',')}} = \\sqrt{${(at*at + an*an).toFixed(2).replace('.', ',')}} \\approx \\mathbf{${a_total.toFixed(2).replace('.', ',')} \\quad [\\text{m/s}^2]}$$
+        </div>
+      `;
+
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    function toggleSolutions() {
+      const panel = document.getElementById('solutionsPanel');
+      panel.classList.toggle('visible');
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      
+      const btn = document.getElementById('themeToggleBtn');
+      btn.innerHTML = newTheme === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    window.onload = () => {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeToggleBtn').innerHTML = savedTheme === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+      generateNewExercise();
+    };
+  </script>
+</body>
+</html>
