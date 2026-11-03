@@ -1,18 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Fondo redondeado elegante -->
-  <rect width="64" height="64" rx="14" fill="#0284c7" />
-  
-  <!-- Trayectoria curva (arco) -->
-  <path d="M 10 48 A 32 32 0 0 1 54 20" fill="none" stroke="#e0f2fe" stroke-width="3" stroke-dasharray="3 3" />
-  
-  <!-- Centro de curvatura / Punto sobre la trayectoria -->
-  <circle cx="36" cy="30" r="4" fill="#facc15" />
-  
-  <!-- Vector Velocidad (tangente) -->
-  <line x1="36" y1="30" x2="52" y2="18" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
-  <polygon points="55,16 48,18 51,23" fill="#38bdf8" />
-  
-  <!-- Vector Aceleración Normal (hacia el centro de curvatura) -->
-  <line x1="36" y1="30" x2="22" y2="44" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" />
-  <polygon points="19,47 22,40 26,44" fill="#f43f5e" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Fondo gradiente oscuro elegante -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+
+    <!-- Marcadores de flecha en alta resolución -->
+    <marker id="arrowV" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAn" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Fondo cuadrado con esquinas redondeadas -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" stroke="#334155" stroke-width="12" />
+
+  <!-- Radio de curvatura (línea de puntos hacia el centro de curvatura C) -->
+  <line x1="112" y1="400" x2="304" y2="224" stroke="#94a3b8" stroke-width="12" stroke-dasharray="16 16" />
+  <circle cx="112" cy="400" r="16" fill="#94a3b8" />
+
+  <!-- Trayectoria curvilínea (curva suave) -->
+  <path d="M 80 160 C 176 80, 256 144, 432 384" fill="none" stroke="#f59e0b" stroke-width="20" stroke-linecap="round" />
+
+  <!-- Punto P (posición del móvil) -->
+  <circle cx="304" cy="224" r="28" fill="#ffffff" stroke="#2563eb" stroke-width="16" />
+
+  <!-- Vector Velocidad v (tangente) -->
+  <line x1="304" y1="224" x2="440" y2="328" stroke="#38bdf8" stroke-width="20" stroke-linecap="round" marker-end="url(#arrowV)" />
+
+  <!-- Vector Aceleración Normal an (perpendicular hacia C) -->
+  <line x1="304" y1="224" x2="192" y2="328" stroke="#ef4444" stroke-width="20" stroke-linecap="round" marker-end="url(#arrowAn)" />
 </svg>
