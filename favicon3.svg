@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Fondo gradiente oscuro -->
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+
+    <!-- Flecha de eje -->
+    <marker id="arrowAxis" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <!-- Fondo redondeado -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad3)" stroke="#334155" stroke-width="12" />
+
+  <!-- Eje unidimensional s(t) -->
+  <line x1="64" y1="320" x2="448" y2="320" stroke="#94a3b8" stroke-width="12" stroke-linecap="round" marker-end="url(#arrowAxis)" />
+
+  <!-- Marcas de posición en la recta -->
+  <line x1="128" y1="300" x2="128" y2="340" stroke="#64748b" stroke-width="8" />
+  <line x1="224" y1="300" x2="224" y2="340" stroke="#64748b" stroke-width="8" />
+  <line x1="320" y1="300" x2="320" y2="340" stroke="#64748b" stroke-width="8" />
+
+  <!-- Móvil en posición s -->
+  <circle cx="320" cy="320" r="28" fill="#f59e0b" stroke="#ffffff" stroke-width="8" />
+
+  <!-- Simbología ds/dt o gráfico escalar -->
+  <path d="M 128 220 Q 224 120 380 180" fill="none" stroke="#38bdf8" stroke-width="16" stroke-linecap="round" />
+  <circle cx="380" cy="180" r="16" fill="#38bdf8" />
+
+  <!-- Etiqueta estilizada ds/dt -->
+  <text x="256" y="100" font-family="system-ui, sans-serif" font-weight="bold" font-size="64" fill="#f1f5f9" text-anchor="middle">ds/dt</text>
+</svg>
