@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica de Análisis Vectorial del Movimiento - 1º Bachillerato</title>
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      chtml: {
+        scale: 1.15
+      },
+      svg: {
+        scale: 1.15
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #0284c7;
+      --solution-bg: #f1f5f9;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #38bdf8;
+      --solution-bg: #0f172a;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-color);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--border-color);
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      margin-bottom: 25px;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 15px;
+    }
+
+    .statement-box {
+      border-left: 4px solid var(--primary);
+      padding-left: 18px;
+      margin-bottom: 25px;
+    }
+
+    .statement-box p {
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .math-display {
+      text-align: center;
+      margin: 15px 0;
+      overflow-x: auto;
+    }
+
+    .questions-list {
+      margin-left: 20px;
+      margin-bottom: 25px;
+    }
+
+    .questions-list li {
+      margin-bottom: 12px;
+      padding-left: 5px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .solutions-panel {
+      display: none;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .solutions-panel.visible {
+      display: block;
+    }
+
+    .solution-item {
+      background-color: var(--solution-bg);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .solution-item h3 {
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Física y Química 1º Bachillerato</h1>
+      <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">
+        🌙 Modo Oscuro
+      </button>
+    </header>
+
+    <main class="card">
+      <div class="category-title">Categoría 1: Análisis vectorial completo del movimiento</div>
+      
+      <div class="statement-box">
+        <p><strong>Enunciado:</strong></p>
+        <p>El vector de posición de un móvil en función del tiempo viene dado por la expresión (en unidades del S.I.):</p>
+        <div class="math-display" id="vector-equation">
+          <!-- MathJax content -->
+        </div>
+      </div>
+
+      <p><strong>Calcula:</strong></p>
+      <ol type="a" class="questions-list" id="questions-list">
+        <!-- Questions content -->
+      </ol>
+
+      <div class="controls">
+        <button class="btn btn-primary" onclick="generateNewExercise()">
+          🔄 Generar nuevo ejercicio
+        </button>
+        <button class="btn btn-secondary" onclick="toggleSolutions()">
+          👁️ Desplegar / Ocultar soluciones
+        </button>
+      </div>
+
+      <div class="solutions-panel" id="solutionsPanel">
+        <h2 style="margin-bottom: 15px; color: var(--primary); font-size: 1.2rem;">Resolución Completa Paso a Paso</h2>
+        <div id="solutionsContent">
+          <!-- Solutions content -->
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Recurso interactivo para el estudio de Cinemática Vectorial (1º Bachillerato).
+    </footer>
+  </div>
+
+  <script>
+    let exData = {};
+
+    function getRandomInt(min, max) {
+      let val = 0;
+      while (val === 0) {
+        val = Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      return val;
+    }
+
+    function generateNewExercise() {
+      const a = getRandomInt(1, 5); // Coeficiente x de t
+      const b = getRandomInt(1, 4); // Coeficiente y de t^2
+      const c = getRandomInt(1, 6); // Constante de y
+      const t1 = getRandomInt(2, 3);
+      const t2 = t1 + getRandomInt(2, 3);
+
+      exData = { a, b, c, t1, t2 };
+
+      // Render de la ecuación
+      const eqContainer = document.getElementById('vector-equation');
+      eqContainer.innerHTML = `$$\\vec{r}(t) = ${a > 1 ? a : ''}t\\hat{i} + (${b > 1 ? b : ''}t^2 + ${c})\\hat{j} \\quad [\\text{m}]$$`;
+
+      // Render de las preguntas
+      const qList = document.getElementById('questions-list');
+      qList.innerHTML = `
+        <li>El vector posición inicial $\\vec{r}(0)$ y el vector posición en el instante $t = ${t1}\\text{ s}$.</li>
+        <li>El vector desplazamiento $\\Delta\\vec{r}$ en el intervalo entre $t_1 = 0\\text{ s}$ y $t_2 = ${t1}\\text{ s}$, así como su módulo $|\\Delta\\vec{r}|$.</li>
+        <li>El vector velocidad media $\\vec{v}_m$ en dicho intervalo y su módulo $|\\vec{v}_m|$.</li>
+        <li>El vector velocidad instantánea $\\vec{v}(t)$ y su módulo en el instante $t = ${t2}\\text{ s}$.</li>
+        <li>El vector aceleración instantánea $\\vec{a}(t)$ y su módulo $|\\vec{a}|$.</li>
+        <li>Las componentes intrínsecas de la aceleración: aceleración tangencial ($a_t$) y aceleración normal ($a_n$) en el instante $t = ${t2}\\text{ s}$.</li>
+        <li>El radio de curvatura $\\rho$ de la trayectoria en el instante $t = ${t2}\\text{ s}$.</li>
+      `;
+
+      // Cálculos
+      const r0_x = 0;
+      const r0_y = c;
+      const rt1_x = a * t1;
+      const rt1_y = b * t1 * t1 + c;
+
+      const dr_x = rt1_x - r0_x;
+      const dr_y = rt1_y - r0_y;
+      const dr_mod = Math.sqrt(dr_x*dr_x + dr_y*dr_y);
+
+      const vm_x = dr_x / t1;
+      const vm_y = dr_y / t1;
+      const vm_mod = dr_mod / t1;
+
+      const vt2_x = a;
+      const vt2_y = 2 * b * t2;
+      const vt2_mod = Math.sqrt(vt2_x*vt2_x + vt2_y*vt2_y);
+
+      const ax = 0;
+      const ay = 2 * b;
+      const a_mod = ay;
+
+      // Derivada de |v(t)| = sqrt(a^2 + 4*b^2*t^2):
+      // d|v|/dt = (8*b^2*t) / (2*sqrt(a^2 + 4*b^2*t^2)) = (4*b^2*t) / sqrt(a^2 + 4*b^2*t^2)
+      const at_val = (4 * b * b * t2) / Math.sqrt(a*a + 4*b*b*t2*t2);
+      const an_val = Math.sqrt(Math.max(0, a_mod*a_mod - at_val*at_val));
+
+      const rho_val = (vt2_mod * vt2_mod) / an_val;
+
+      // Render de las soluciones corregidas
+      const solContainer = document.getElementById('solutionsContent');
+      solContainer.innerHTML = `
+        <div class="solution-item">
+          <h3>a) Vector posición inicial $\\vec{r}(0)$ y en $t = ${t1}\\text{ s}$</h3>
+          <p>Sustituyendo el tiempo en la ecuación de posición $\\vec{r}(t)$:</p>
+          $$\\vec{r}(0) = ${a}(0)\\hat{i} + (${b}(0)^2 + ${c})\\hat{j} = \\mathbf{${c}\\hat{j} \\quad [\\text{m}]}$$
+          $$\\vec{r}(${t1}) = ${a}(${t1})\\hat{i} + (${b}(${t1})^2 + ${c})\\hat{j} = \\mathbf{${rt1_x}\\hat{i} + ${rt1_y}\\hat{j} \\quad [\\text{m}]}$$
+        </div>
+
+        <div class="solution-item">
+          <h3>b) Vector desplazamiento $\\Delta\\vec{r}$ y su módulo en $[0, ${t1}]\\text{ s}$</h3>
+          $$\\Delta\\vec{r} = \\vec{r}(${t1}) - \\vec{r}(0) = (${rt1_x}\\hat{i} + ${rt1_y}\\hat{j}) - (${c}\\hat{j}) = \\mathbf{${dr_x}\\hat{i} + ${dr_y}\\hat{j} \\quad [\\text{m}]}$$
+          $$|\\Delta\\vec{r}| = \\sqrt{(${dr_x})^2 + (${dr_y})^2} = \\sqrt{${dr_x*dr_x + dr_y*dr_y}} \\approx \\mathbf{${dr_mod.toFixed(2)} \\quad [\\text{m}]}$$
+        </div>
+
+        <div class="solution-item">
+          <h3>c) Vector velocidad media $\\vec{v}_m$ y su módulo</h3>
+          $$\\vec{v}_m = \\frac{\\Delta\\vec{r}}{\\Delta t} = \\frac{${dr_x}\\hat{i} + ${dr_y}\\hat{j}}{${t1}} = \\mathbf{${vm_x.toFixed(2)}\\hat{i} + ${vm_y.toFixed(2)}\\hat{j} \\quad [\\text{m/s}]}$$
+          $$|\\vec{v}_m| = \\frac{|\\Delta\\vec{r}|}{\\Delta t} = \\frac{${dr_mod.toFixed(2)}}{${t1}} \\approx \\mathbf{${vm_mod.toFixed(2)} \\quad [\\text{m/s}]}$$
+        </div>
+
+        <div class="solution-item">
+          <h3>d) Vector velocidad instantánea $\\vec{v}(t)$ y en $t = ${t2}\\text{ s}$</h3>
+          <p>Derivamos la posición respecto al tiempo $\\vec{v}(t) = \\frac{d\\vec{r}}{dt}$:</p>
+          $$\\vec{v}(t) = \\mathbf{${a}\\hat{i} + ${2*b}t\\hat{j} \\quad [\\text{m/s}]}$$
+          <p>Evaluando en $t = ${t2}\\text{ s}$:</p>
+          $$\\vec{v}(${t2}) = ${a}\\hat{i} + ${2*b}(${t2})\\hat{j} = \\mathbf{${vt2_x}\\hat{i} + ${vt2_y}\\hat{j} \\quad [\\text{m/s}]}$$
+          $$|\\vec{v}(${t2})| = \\sqrt{(${vt2_x})^2 + (${vt2_y})^2} = \\sqrt{${vt2_x*vt2_x + vt2_y*vt2_y}} \\approx \\mathbf{${vt2_mod.toFixed(2)} \\quad [\\text{m/s}]}$$
+        </div>
+
+        <div class="solution-item">
+          <h3>e) Vector aceleración instantánea $\\vec{a}(t)$ y su módulo</h3>
+          <p>Derivamos la velocidad respecto al tiempo $\\vec{a}(t) = \\frac{d\\vec{v}}{dt}$:</p>
+          $$\\vec{a}(t) = \\mathbf{${ay}\\hat{j} \\quad [\\text{m/s}^2]}$$
+          <p>Al ser constante, su módulo es $\\mathbf{|\\vec{a}| = ${a_mod} \\quad [\\text{m/s}^2]}$.</p>
+        </div>
+
+        <div class="solution-item">
+          <h3>f) Componentes intrínsecas de la aceleración en $t = ${t2}\\text{ s}$</h3>
+          <p>Aceleración tangencial $a_t = \\frac{d|\\vec{v}|}{dt}$ partiendo del módulo $|\\vec{v}(t)| = \\sqrt{${a*a} + ${4*b*b}t^2}$:</p>
+          $$a_t(t) = \\frac{${8*b*b}t}{2\\sqrt{${a*a} + ${4*b*b}t^2}} = \\frac{${4*b*b}t}{\\sqrt{${a*a} + ${4*b*b}t^2}}$$
+          <p>Evaluando en $t = ${t2}\\text{ s}$:</p>
+          $$a_t(${t2}) = \\frac{${4*b*b}(${t2})}{\\sqrt{${a*a} + ${4*b*b}(${t2})^2}} \\approx \\mathbf{${at_val.toFixed(2)} \\quad [\\text{m/s}^2]}$$
+          <p>Aceleración normal $a_n = \\sqrt{|\\vec{a}|^2 - a_t^2}$:</p>
+          $$a_n(${t2}) = \\sqrt{(${a_mod})^2 - (${at_val.toFixed(2)})^2} \\approx \\mathbf{${an_val.toFixed(2)} \\quad [\\text{m/s}^2]}$$
+        </div>
+
+        <div class="solution-item">
+          <h3>g) Radio de curvatura $\\rho$ en $t = ${t2}\\text{ s}$</h3>
+          <p>Usando la relación $a_n = \\frac{v^2}{\\rho} \\implies \\rho = \\frac{v^2}{a_n}$:</p>
+          $$\\rho = \\frac{(${vt2_mod.toFixed(2)})^2}{${an_val.toFixed(2)}} = \\frac{${(vt2_mod*vt2_mod).toFixed(2)}}{${an_val.toFixed(2)}} \\approx \\mathbf{${rho_val.toFixed(2)} \\quad [\\text{m}]}$$
+        </div>
+      `;
+
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    function toggleSolutions() {
+      const panel = document.getElementById('solutionsPanel');
+      panel.classList.toggle('visible');
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      
+      const btn = document.getElementById('themeToggleBtn');
+      btn.innerHTML = newTheme === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    window.onload = () => {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeToggleBtn').innerHTML = savedTheme === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+      generateNewExercise();
+    };
+  </script>
+</body>
+</html>

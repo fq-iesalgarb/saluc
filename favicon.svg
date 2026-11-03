@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0284c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="512" height="512" rx="110" fill="url(#grad)"/>
+
+  <!-- Grid lines for Vector Space -->
+  <path d="M 96,256 L 416,256 M 256,96 L 256,416" stroke="rgba(255,255,255,0.25)" stroke-width="8" stroke-dasharray="12,12"/>
+
+  <!-- Vector Curved Trajectory -->
+  <path d="M 120,380 Q 220,120 400,160" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Main Vector Arrow r(t) -->
+  <g filter="url(#shadow)">
+    <line x1="120" y1="380" x2="330" y2="185" stroke="#ffffff" stroke-width="24" stroke-linecap="round"/>
+    <polygon points="360,155 305,175 335,225" fill="#ffffff"/>
+  </g>
+
+  <!-- Vector r arrow accent head -->
+  <text x="140" y="160" font-family="system-ui, sans-serif" font-weight="800" font-size="110" fill="#ffffff">r⃗</text>
+</svg>
