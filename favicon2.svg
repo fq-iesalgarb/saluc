@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Fondo redondeado elegante -->
+  <rect width="64" height="64" rx="14" fill="#0284c7" />
+  
+  <!-- Trayectoria curva (arco) -->
+  <path d="M 10 48 A 32 32 0 0 1 54 20" fill="none" stroke="#e0f2fe" stroke-width="3" stroke-dasharray="3 3" />
+  
+  <!-- Centro de curvatura / Punto sobre la trayectoria -->
+  <circle cx="36" cy="30" r="4" fill="#facc15" />
+  
+  <!-- Vector Velocidad (tangente) -->
+  <line x1="36" y1="30" x2="52" y2="18" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
+  <polygon points="55,16 48,18 51,23" fill="#38bdf8" />
+  
+  <!-- Vector Aceleración Normal (hacia el centro de curvatura) -->
+  <line x1="36" y1="30" x2="22" y2="44" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" />
+  <polygon points="19,47 22,40 26,44" fill="#f43f5e" />
+</svg>
