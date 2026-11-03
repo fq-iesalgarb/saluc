@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica de Ecuación de la Trayectoria - 1º Bachillerato</title>
+
+  <!-- Favicon Link -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      chtml: {
+        scale: 1.15
+      },
+      svg: {
+        scale: 1.15
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #0284c7;
+      --solution-bg: #f1f5f9;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #38bdf8;
+      --solution-bg: #0f172a;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-color);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--border-color);
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      margin-bottom: 25px;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 15px;
+    }
+
+    .statement-box {
+      border-left: 4px solid var(--primary);
+      padding-left: 18px;
+      margin-bottom: 25px;
+    }
+
+    .statement-box p {
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .math-display {
+      text-align: center;
+      margin: 15px 0;
+      overflow-x: auto;
+    }
+
+    .questions-list {
+      margin-left: 20px;
+      margin-bottom: 25px;
+    }
+
+    .questions-list li {
+      margin-bottom: 12px;
+      padding-left: 5px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .solutions-panel {
+      display: none;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .solutions-panel.visible {
+      display: block;
+    }
+
+    .solution-item {
+      background-color: var(--solution-bg);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .solution-item h3 {
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Física y Química 1º Bachillerato</h1>
+      <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">
+        🌙 Modo Oscuro
+      </button>
+    </header>
+
+    <main class="card">
+      <div class="category-title">Categoría 4: Ecuación de la trayectoria a partir de ecuaciones paramétricas</div>
+      
+      <div class="statement-box">
+        <p><strong>Enunciado:</strong></p>
+        <p>El vector de posición de una partícula que se mueve en el plano $XY$ viene dado por:</p>
+        <div class="math-display" id="vector-equation">
+          <!-- MathJax content -->
+        </div>
+      </div>
+
+      <p><strong>Calcula:</strong></p>
+      <ol type="a" class="questions-list" id="questions-list">
+        <li>Las ecuaciones paramétricas del movimiento $x(t)$ e $y(t)$.</li>
+        <li>La ecuación explícita de la trayectoria $y(x)$ eliminando la variable tiempo ($t$).</li>
+      </ol>
+
+      <div class="controls">
+        <button class="btn btn-primary" onclick="generateNewExercise()">
+          🔄 Generar nuevo ejercicio
+        </button>
+        <button class="btn btn-secondary" onclick="toggleSolutions()">
+          👁️ Desplegar / Ocultar soluciones
+        </button>
+      </div>
+
+      <div class="solutions-panel" id="solutionsPanel">
+        <h2 style="margin-bottom: 15px; color: var(--primary); font-size: 1.2rem;">Resolución Completa Paso a Paso</h2>
+        <div id="solutionsContent">
+          <!-- Solutions content -->
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Recurso interactivo para la deducción de la Ecuación de la Trayectoria (1º Bachillerato).
+    </footer>
+  </div>
+
+  <script>
+    function getRandomInt(min, max) {
+      let val = 0;
+      while (val === 0) {
+        val = Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      return val;
+    }
+
+    function formatFraction(num, den) {
+      // Simplifica fracción para representación limpia
+      const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+      const common = Math.abs(gcd(num, den));
+      const n = num / common;
+      const d = den / common;
+      if (d === 1) return `${n}`;
+      return `\\frac{${n}}{${d}}`;
+    }
+
+    function generateNewExercise() {
+      const a = getRandomInt(1, 5); // Coeficiente x de t
+      const b = getRandomInt(1, 4); // Coeficiente y de t^2
+      const c = getRandomInt(1, 6); // Constante y
+
+      // Render ecuación principal
+      const eqContainer = document.getElementById('vector-equation');
+      eqContainer.innerHTML = `$$\\vec{r}(t) = ${a > 1 ? a : ''}t\\hat{i} + (${b > 1 ? b : ''}t^2 + ${c})\\hat{j} \\quad [\\text{m}]$$`;
+
+      // Cálculos y simplificaciones para y(x)
+      // x = a*t  =>  t = x/a
+      // y = b*(x/a)^2 + c = (b/a^2)*x^2 + c
+      const fracCoeff = formatFraction(b, a * a);
+
+      const solContainer = document.getElementById('solutionsContent');
+      solContainer.innerHTML = `
+        <div class="solution-item">
+          <h3>a) Ecuaciones paramétricas del movimiento $x(t)$ e $y(t)$</h3>
+          <p>Las ecuaciones paramétricas corresponden a las componentes escalarmente independientes del vector de posición $\\vec{r}(t) = x(t)\\hat{i} + y(t)\\hat{j}$:</p>
+          $$x(t) = ${a > 1 ? a : ''}t \\quad [\\text{m}]$$
+          $$y(t) = ${b > 1 ? b : ''}t^2 + ${c} \\quad [\\text{m}]$$
+        </div>
+
+        <div class="solution-item">
+          <h3>b) Ecuación explícita de la trayectoria $y(x)$</h3>
+          <p><strong>Paso 1:</strong> Despejamos el parámetro tiempo ($t$) de la ecuación paramétrica de la posición horizontal $x(t)$:</p>
+          $$x = ${a > 1 ? a : ''}t \\implies t = ${a === 1 ? 'x' : `\\frac{x}{${a}}`}$$
+
+          <p><strong>Paso 2:</strong> Sustituimos la expresión del tiempo $t$ en la ecuación paramétrica de la posición vertical $y(t)$:</p>
+          $$y = ${b > 1 ? b : ''}\\left(${a === 1 ? 'x' : `\\frac{x}{${a}}`}\\right)^2 + ${c}$$
+
+          <p><strong>Paso 3:</strong> Operamos algebraicamente para obtener la función cartesiana $y(x)$:</p>
+          $$y(x) = ${b > 1 ? b : ''}\\cdot \\frac{x^2}{${a * a}} + ${c} = \\mathbf{${fracCoeff === '1' ? '' : fracCoeff} x^2 + ${c} \\quad [\\text{m}]}$$
+
+          <p><em>Conclusión: La trayectoria descrita por la partícula corresponde a una <strong>parábola</strong> cartesiana desplazada ${c} unidades en el eje vertical.</em></p>
+        </div>
+      `;
+
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    function toggleSolutions() {
+      const panel = document.getElementById('solutionsPanel');
+      panel.classList.toggle('visible');
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      
+      const btn = document.getElementById('themeToggleBtn');
+      btn.innerHTML = newTheme === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    window.onload = () => {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeToggleBtn').innerHTML = savedTheme === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+      generateNewExercise();
+    };
+  </script>
+</body>
+</html>

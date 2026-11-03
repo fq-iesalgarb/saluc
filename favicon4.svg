@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Fondo gradiente oscuro -->
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+
+    <!-- Flechas de ejes Cartesianos -->
+    <marker id="arrowAxisX" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+    <marker id="arrowAxisY" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <!-- Fondo redondeado -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad4)" stroke="#334155" stroke-width="12" />
+
+  <!-- Ejes XY -->
+  <line x1="80" y1="416" x2="448" y2="416" stroke="#94a3b8" stroke-width="10" stroke-linecap="round" marker-end="url(#arrowAxisX)" />
+  <line x1="80" y1="416" x2="80" y2="80" stroke="#94a3b8" stroke-width="10" stroke-linecap="round" marker-end="url(#arrowAxisY)" />
+
+  <!-- Trayectoria parabólica y(x) -->
+  <path d="M 80 350 Q 240 340 400 120" fill="none" stroke="#38bdf8" stroke-width="16" stroke-linecap="round" />
+
+  <!-- Puntos del parámetro t que se eliminan -->
+  <circle cx="160" cy="328" r="12" fill="#ef4444" />
+  <circle cx="260" cy="270" r="12" fill="#ef4444" />
+  <circle cx="350" cy="180" r="12" fill="#ef4444" />
+
+  <!-- Texto estilizado y(x) -->
+  <text x="290" y="400" font-family="system-ui, sans-serif" font-weight="bold" font-size="52" fill="#facc15">y(x)</text>
+</svg>
