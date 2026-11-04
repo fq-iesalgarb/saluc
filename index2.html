@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Categoría 2: Aceleración Normal y Radio de Curvatura - 1º Bachillerato</title>
 
-  <!-- Favicon Link (Soporta archivo favicon.svg y Data URI como fallback) -->
+  <!-- Favicon Link -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Cpath d='M 12 52 L 52 52 M 12 52 L 12 12' stroke='%23ffffff' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M 12 52 Q 24 45 48 18' fill='none' stroke='%2338bdf8' stroke-width='3' stroke-dasharray='3 3'/%3E%3Cline x1='12' y1='52' x2='44' y2='22' stroke='%23facc15' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='48,18 38,22 44,28' fill='%23facc15'/%3E%3C/svg%3E">
 
@@ -278,53 +278,94 @@
       // Clean, realistic parameters for 1st Bachillerato
       const t = getRandomFloat(1.0, 5.0, 1);
       const v = getRandomFloat(10.0, 30.0, 1);
-      
-      // Radius of curvature (rho) between 10m and 50m
       const rho_exact = getRandomInt(12, 45); 
-      // Calculate a_n = v^2 / rho
-      const an = parseFloat(((v * v) / rho_exact).toFixed(2));
-
-      // Aceleración tangencial a_t
       const at = getRandomFloat(3.0, 15.0, 1);
 
-      exData = { t, v, an, rho_exact, at };
+      // Decidimos aleatoriamente si se pide la aceleración normal o el radio de curvatura (50% probabilidad)
+      const askForRho = Math.random() < 0.5;
 
-      // Render Enunciado
-      document.getElementById('statement-text').innerHTML = `
-        Un cuerpo se desplaza describiendo una trayectoria curva. En el instante $t = ${t.toString().replace('.', ',')}\\text{ s}$, su velocidad instantánea tiene un módulo de $v = ${v.toString().replace('.', ',')}\\text{ m/s}$ y la aceleración normal que experimenta en ese punto es $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$.
-      `;
+      let an, rho;
 
-      // Render Preguntas
-      document.getElementById('questions-list').innerHTML = `
-        <li>El radio de curvatura $\\rho$ (o $r$) de la trayectoria en ese instante.</li>
-        <li>Si en ese mismo instante la aceleración tangencial es $a_t = ${at.toString().replace('.', ',')}\\text{ m/s}^2$, determina el módulo de la aceleración total $|\\vec{a}|$.</li>
-      `;
+      if (askForRho) {
+        // Opción A: Se da a_n y se pide calcular rho
+        an = parseFloat(((v * v) / rho_exact).toFixed(2));
+        rho = parseFloat(((v * v) / an).toFixed(2));
 
-      // Calculate Exact Solutions
-      const rho_calc = (v * v) / an;
-      const a_total = Math.sqrt(at * at + an * an);
+        // Render Enunciado
+        document.getElementById('statement-text').innerHTML = `
+          Un cuerpo se desplaza describiendo una trayectoria curva. En el instante $t = ${t.toString().replace('.', ',')}\\text{ s}$, su velocidad instantánea tiene un módulo de $v = ${v.toString().replace('.', ',')}\\text{ m/s}$ y la aceleración normal que experimenta en ese punto es $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$.
+        `;
 
-      // Render Soluciones
-      document.getElementById('solutionsContent').innerHTML = `
-        <div class="solution-item">
-          <h3>a) Radio de curvatura $\\rho$ de la trayectoria</h3>
-          <p>La relación entre la velocidad instantánea $v$, la aceleración normal $a_n$ y el radio de curvatura $\\rho$ viene dada por la expresión:</p>
-          $$a_n = \\frac{v^2}{\\rho}$$
-          <p>Despejando el radio de curvatura $\\rho$:</p>
-          $$\\rho = \\frac{v^2}{a_n}$$
-          <p>Sustituyendo los datos conocidos ($v = ${v.toString().replace('.', ',')}\\text{ m/s}$ y $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$):</p>
-          $$\\rho = \\frac{(${v.toString().replace('.', ',')})^2}{${an.toString().replace('.', ',')}} = \\frac{${(v*v).toFixed(2).replace('.', ',')}}{${an.toString().replace('.', ',')}} \\approx \\mathbf{${rho_calc.toFixed(2).replace('.', ',')} \\quad [\\text{m}]}$$
-        </div>
+        // Render Preguntas
+        document.getElementById('questions-list').innerHTML = `
+          <li>El radio de curvatura $\\rho$ (o $r$) de la trayectoria en ese instante.</li>
+          <li>Si en ese mismo instante la aceleración tangencial es $a_t = ${at.toString().replace('.', ',')}\\text{ m/s}^2$, determina el módulo de la aceleración total $|\\vec{a}|$.</li>
+        `;
 
-        <div class="solution-item">
-          <h3>b) Módulo de la aceleración total $|\\vec{a}|$</h3>
-          <p>Las componentes intrínsecas de la aceleración (tangencial $a_t$ y normal $a_n$) son mutuamente perpendiculares ($a_t \\perp a_n$). Por lo tanto, el módulo del vector aceleración total se obtiene aplicando el teorema de Pitágoras:</p>
-          $$|\\vec{a}| = \\sqrt{a_t^2 + a_n^2}$$
-          <p>Sustituyendo $a_t = ${at.toString().replace('.', ',')}\\text{ m/s}^2$ y $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$:</p>
-          $$|\\vec{a}| = \\sqrt{(${at.toString().replace('.', ',')})^2 + (${an.toString().replace('.', ',')})^2}$$
-          $$|\\vec{a}| = \\sqrt{${(at*at).toFixed(2).replace('.', ',')} + ${(an*an).toFixed(2).replace('.', ',')}} = \\sqrt{${(at*at + an*an).toFixed(2).replace('.', ',')}} \\approx \\mathbf{${a_total.toFixed(2).replace('.', ',')} \\quad [\\text{m/s}^2]}$$
-        </div>
-      `;
+        // Calculate Exact Solutions
+        const a_total = Math.sqrt(at * at + an * an);
+
+        // Render Soluciones
+        document.getElementById('solutionsContent').innerHTML = `
+          <div class="solution-item">
+            <h3>a) Radio de curvatura $\\rho$ de la trayectoria</h3>
+            <p>La relación entre la velocidad instantánea $v$, la aceleración normal $a_n$ y el radio de curvatura $\\rho$ viene dada por la expresión:</p>
+            $$a_n = \\frac{v^2}{\\rho}$$
+            <p>Despejando el radio de curvatura $\\rho$:</p>
+            $$\\rho = \\frac{v^2}{a_n}$$
+            <p>Sustituyendo los datos conocidos ($v = ${v.toString().replace('.', ',')}\\text{ m/s}$ y $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$):</p>
+            $$\\rho = \\frac{(${v.toString().replace('.', ',')})^2}{${an.toString().replace('.', ',')}} = \\frac{${(v*v).toFixed(2).replace('.', ',')}}{${an.toString().replace('.', ',')}} \\approx \\mathbf{${rho.toFixed(2).replace('.', ',')} \\quad [\\text{m}]}$$
+          </div>
+
+          <div class="solution-item">
+            <h3>b) Módulo de la aceleración total $|\\vec{a}|$</h3>
+            <p>Las componentes intrínsecas de la aceleración (tangencial $a_t$ y normal $a_n$) son mutuamente perpendiculares ($a_t \\perp a_n$). Por lo tanto, el módulo del vector aceleración total se obtiene aplicando el teorema de Pitágoras:</p>
+            $$|\\vec{a}| = \\sqrt{a_t^2 + a_n^2}$$
+            <p>Sustituyendo $a_t = ${at.toString().replace('.', ',')}\\text{ m/s}^2$ y $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$:</p>
+            $$|\\vec{a}| = \\sqrt{(${at.toString().replace('.', ',')})^2 + (${an.toString().replace('.', ',')})^2}$$
+            $$|\\vec{a}| = \\sqrt{${(at*at).toFixed(2).replace('.', ',')} + ${(an*an).toFixed(2).replace('.', ',')}} = \\sqrt{${(at*at + an*an).toFixed(2).replace('.', ',')}} \\approx \\mathbf{${a_total.toFixed(2).replace('.', ',')} \\quad [\\text{m/s}^2]}$$
+          </div>
+        `;
+
+      } else {
+        // Opción B: Se da rho y se pide calcular a_n
+        rho = rho_exact;
+        an = parseFloat(((v * v) / rho).toFixed(2));
+
+        // Render Enunciado
+        document.getElementById('statement-text').innerHTML = `
+          Un cuerpo se desplaza describiendo una trayectoria curva con un radio de curvatura de $\\rho = ${rho.toString().replace('.', ',')}\\text{ m}$. En el instante $t = ${t.toString().replace('.', ',')}\\text{ s}$, su velocidad instantánea tiene un módulo de $v = ${v.toString().replace('.', ',')}\\text{ m/s}$.
+        `;
+
+        // Render Preguntas
+        document.getElementById('questions-list').innerHTML = `
+          <li>La aceleración normal $a_n$ que experimenta el cuerpo en ese instante.</li>
+          <li>Si en ese mismo instante la aceleración tangencial es $a_t = ${at.toString().replace('.', ',')}\\text{ m/s}^2$, determina el módulo de la aceleración total $|\\vec{a}|$.</li>
+        `;
+
+        // Calculate Exact Solutions
+        const a_total = Math.sqrt(at * at + an * an);
+
+        // Render Soluciones
+        document.getElementById('solutionsContent').innerHTML = `
+          <div class="solution-item">
+            <h3>a) Aceleración normal $a_n$ que experimenta el cuerpo</h3>
+            <p>La aceleración normal o centrípeta $a_n$ cuantifica el cambio en la dirección del vector velocidad y se calcula mediante la fórmula:</p>
+            $$a_n = \\frac{v^2}{\\rho}$$
+            <p>Sustituyendo los datos conocidos ($v = ${v.toString().replace('.', ',')}\\text{ m/s}$ y $\\rho = ${rho.toString().replace('.', ',')}\\text{ m}$):</p>
+            $$a_n = \\frac{(${v.toString().replace('.', ',')})^2}{${rho.toString().replace('.', ',')}} = \\frac{${(v*v).toFixed(2).replace('.', ',')}}{${rho.toString().replace('.', ',')}} \\approx \\mathbf{${an.toFixed(2).replace('.', ',')} \\quad [\\text{m/s}^2]}$$
+          </div>
+
+          <div class="solution-item">
+            <h3>b) Módulo de la aceleración total $|\\vec{a}|$</h3>
+            <p>Las componentes intrínsecas de la aceleración (tangencial $a_t$ y normal $a_n$) son mutuamente perpendiculares ($a_t \\perp a_n$). Por lo tanto, el módulo del vector aceleración total se obtiene aplicando el teorema de Pitágoras:</p>
+            $$|\\vec{a}| = \\sqrt{a_t^2 + a_n^2}$$
+            <p>Sustituyendo $a_t = ${at.toString().replace('.', ',')}\\text{ m/s}^2$ y $a_n = ${an.toString().replace('.', ',')}\\text{ m/s}^2$:</p>
+            $$|\\vec{a}| = \\sqrt{(${at.toString().replace('.', ',')})^2 + (${an.toString().replace('.', ',')})^2}$$
+            $$|\\vec{a}| = \\sqrt{${(at*at).toFixed(2).replace('.', ',')} + ${(an*an).toFixed(2).replace('.', ',')}} = \\sqrt{${(at*at + an*an).toFixed(2).replace('.', ',')}} \\approx \\mathbf{${a_total.toFixed(2).replace('.', ',')} \\quad [\\text{m/s}^2]}$$
+          </div>
+        `;
+      }
 
       if (window.MathJax) {
         MathJax.typesetPromise();
