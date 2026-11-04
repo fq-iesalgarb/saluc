@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="icon" type="image/svg+xml" href="favicon3.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Práctica de Ecuación de la Trayectoria - 1º Bachillerato</title>
@@ -278,7 +277,6 @@
     }
 
     function formatFraction(num, den) {
-      // Simplifica fracción para representación limpia
       const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
       const common = Math.abs(gcd(num, den));
       const n = num / common;
@@ -297,9 +295,8 @@
       eqContainer.innerHTML = `$$\\vec{r}(t) = ${a > 1 ? a : ''}t\\hat{i} + (${b > 1 ? b : ''}t^2 + ${c})\\hat{j} \\quad [\\text{m}]$$`;
 
       // Cálculos y simplificaciones para y(x)
-      // x = a*t  =>  t = x/a
-      // y = b*(x/a)^2 + c = (b/a^2)*x^2 + c
       const fracCoeff = formatFraction(b, a * a);
+      const bPrefix = b > 1 ? `${b} \\cdot ` : '';
 
       const solContainer = document.getElementById('solutionsContent');
       solContainer.innerHTML = `
@@ -319,7 +316,7 @@
           $$y = ${b > 1 ? b : ''}\\left(${a === 1 ? 'x' : `\\frac{x}{${a}}`}\\right)^2 + ${c}$$
 
           <p><strong>Paso 3:</strong> Operamos algebraicamente para obtener la función cartesiana $y(x)$:</p>
-          $$y(x) = ${b > 1 ? b : ''}\\cdot \\frac{x^2}{${a * a}} + ${c} = \\mathbf{${fracCoeff === '1' ? '' : fracCoeff} x^2 + ${c} \\quad [\\text{m}]}$$
+          $$y(x) = ${bPrefix}\\frac{x^2}{${a * a}} + ${c} = \\mathbf{${fracCoeff === '1' ? '' : fracCoeff} x^2 + ${c} \\quad [\\text{m}]}$$
 
           <p><em>Conclusión: La trayectoria descrita por la partícula corresponde a una <strong>parábola</strong> cartesiana desplazada ${c} unidades en el eje vertical.</em></p>
         </div>
